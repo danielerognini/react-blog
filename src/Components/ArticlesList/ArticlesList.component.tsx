@@ -1,5 +1,5 @@
 import React from 'react';
-import './ArticlesList.styles.css';
+import { StyledList } from './ArticlesList.styles';
 
 
 interface props {
@@ -9,17 +9,15 @@ interface props {
 const ArticlesPreview = (props:props) => {
     const { articleList } = props;
 
-    function getArticleList () {
-        return(articleList)
-    }
-
     return(
-        <div>
+        <StyledList>
             {
-                articleList.map(article => <p>{article.title}</p>)
+                articleList.map(article => <p key={article.key}>{article.title}</p>)
             }
-        </div>
+        </StyledList>
     );
 }
+
+
 
 export default ArticlesPreview;

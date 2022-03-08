@@ -11,19 +11,16 @@ import EditPost from './Pages/EditPost/EditPost.component';
 
 function App() {
 
-  const [articlesList, setArticlesList] = useState<Array<any>>([]);
-
   function getData() {
     var arr:Array<any> = [];
     data.articles.map(article => arr.push(article));
-    console.log('getData called')
     return(arr);
   }
 
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/"> <Home articlesList={articlesList} getData={getData} /> </Route>
+        <Route path="/"> <Home getData={getData} /> </Route>
         <Route path="/login" component={Login} />
         <Route path="/new" component={NewPost} />
         <Route path="/edit" component={EditPost} />
