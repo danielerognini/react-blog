@@ -56,5 +56,21 @@ export const data = {
             "date": "07/03/2022",
             "author": "Steve"
         }
+    ],
+    "users": [
+        {
+            "id": 0,
+            "name": "John",
+            "isAdmin": false,
+            "email": "john@email.com",
+            "password": "1234"
+        },
+        {
+            "id": 1,
+            "name": "Dani",
+            "isAdmin": true,
+            "email": "dani@email.com",
+            "password": "1234"
+        }
     ]
 }

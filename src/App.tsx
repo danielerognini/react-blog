@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { data } from './data';
@@ -11,19 +11,27 @@ import EditPost from './Pages/EditPost/EditPost.component';
 
 function App() {
 
-  function getData() {
+  const [ currentUser, setCurrentUser ] = useState<number>();
+
+  function getArticles() {
     var arr:Array<any> = [];
     data.articles.map(article => arr.push(article));
+    return(arr);
+  }
+
+  function getUsers() {
+    var arr:Array<any> = [];
+    data.users.map(user => arr.push(user));
     return(arr);
   }
 
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/"> <Home getData={getData} /> </Route>
-        <Route path="/login" component={Login} />
-        <Route path="/new" component={NewPost} />
-        <Route path="/edit" component={EditPost} />
+        <Route exact path="/"> <Home user={currentUser} getArticles={getArticles} /> </Route>
+        <Route exact path="/login"> <Login user={currentUser} getUsers={getUsers} setUser={setCurrentUser} /> </Route>
+        <Route exact path="/new"> <NewPost /> </Route>
+        <Route exact path="/edit/:number"> <EditPost /></Route>
       </Switch>
     </BrowserRouter>
   )

@@ -1,22 +1,25 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
 import { StyledHeader, Left, Right } from './Header.styles';
 
-const Header = () => {
+interface props {
+    user:any;
+}
+
+const Header = (props:props) => {
+    const { user } = props;
     return (
         <StyledHeader>
             <Left>
-                <a href="#">
+                <NavLink exact to="/">
                     <p>React blog</p>
-                </a>
-                <a href="#">
-                    <p>Home</p>
-                </a>
+                </NavLink>
             </Left>
             {/* - Separare con CSS - */}
             <Right>
-                <a href="#">
-                    <p>Account</p>
-                </a>
+                <NavLink exact to="/login">
+                    <p>{user ? user : 'Account'}</p>
+                </NavLink>
             </Right>
         </StyledHeader>
     );   

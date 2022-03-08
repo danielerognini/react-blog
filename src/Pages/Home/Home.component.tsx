@@ -6,18 +6,19 @@ import ArticlesList from '../../Components/ArticlesList/ArticlesList.component';
 import Article from '../../Components/Article/Article.component';
 
 interface props {
-    getData:Function
+    user:any;
+    getArticles:Function;
 }
 
 const Home = (props:props) => {
-    const { getData } = props;
-    let list = getData();
+    const { user, getArticles } = props;
+    let list = getArticles();
 
     const [currentArticle, setCurrentArticle] = useState<number>(0);
 
     return (
         <div className="App">
-            <Header />
+            <Header user={user} />
             <HomeBody>
                 <LeftSection>
                     <ArticlesList articleList={list} viewArticle={setCurrentArticle} />
