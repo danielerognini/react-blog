@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { HomeBody, LeftSection, RightSection } from './Home.styles';
 
 import Header from '../../Components/Header/Header.component';
@@ -11,18 +11,19 @@ interface props {
 
 const Home = (props:props) => {
     const { getData } = props;
-    let list;
-    list = getData();
-    
+    let list = getData();
+
+    const [currentArticle, setCurrentArticle] = useState<number>(0);
+
     return (
         <div className="App">
             <Header />
             <HomeBody>
                 <LeftSection>
-                    <ArticlesList articleList={list} />
+                    <ArticlesList articleList={list} viewArticle={setCurrentArticle} />
                 </LeftSection>
                 <RightSection>
-                    <Article article={list[0]} />
+                    <Article article={list[currentArticle]} />
                 </RightSection>
             </HomeBody>
         </div>

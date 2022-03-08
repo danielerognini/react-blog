@@ -4,15 +4,16 @@ import { StyledList } from './ArticlesList.styles';
 
 interface props {
     articleList:Array<any>;
+    viewArticle:Function;
 };
 
 const ArticlesPreview = (props:props) => {
-    const { articleList } = props;
+    const { articleList, viewArticle } = props;
 
     return(
         <StyledList>
             {
-                articleList.map(article => <p key={article.key}>{article.title}</p>)
+                articleList.map(article => <p onClick={() => viewArticle(article.id)} key={article.id}>{article.title}</p>)
             }
         </StyledList>
     );
