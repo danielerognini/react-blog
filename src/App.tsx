@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
+import { data } from './data';
+
+import Home from './Pages/Home/Home.component';
+import Login from './Pages/Login/Login.component';
+import NewPost from './Pages/NewPost/NewPost.component';
+import EditPost from './Pages/EditPost/EditPost.component';
+
 
 function App() {
+
+  const [articlesList, setArticlesList] = useState<Array<any>>([]);
+
+  function getData() {
+    var arr:Array<any> = [];
+    data.articles.map(article => arr.push(article));
+    console.log('getData called')
+    return(arr);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <Switch>
+        <Route path="/"> <Home articlesList={articlesList} getData={getData} /> </Route>
+        <Route path="/login" component={Login} />
+        <Route path="/new" component={NewPost} />
+        <Route path="/edit" component={EditPost} />
+      </Switch>
+    </BrowserRouter>
+  )
 }
 
 export default App;
