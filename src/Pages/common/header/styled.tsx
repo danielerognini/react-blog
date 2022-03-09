@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 
-export const StyledHeader = styled.div`
+export const HeaderWrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+  
+    position: fixed;
+    width: 100%;
+    top:0;
 
     justify-content: space-between;
 
@@ -34,7 +38,6 @@ export const Left = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    /*background-color:blue; /* <- DELETE THiS */
 `;
 
 export const Right = styled.div`
@@ -42,6 +45,4 @@ export const Right = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-
-    /*background-color:red; /* <- DELETE THiS */
 `;

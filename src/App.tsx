@@ -1,39 +1,37 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import React, {useEffect} from 'react';
+import {Switch, Route, useLocation, useHistory, useRouteMatch} from 'react-router-dom';
 
-import { data } from './data';
+import Home from './pages/home/Home';
+import Login from './pages/login/Login';
+import NewPost from './pages/newPost/NewPost';
+import ViewPost from './pages/viewPost/ViewPost';
+import useAuth from "./pages/common/hooks/useAuth";
+import EditPost from "./pages/editPost/editPost";
 
-import Home from './Pages/Home/Home.component';
-import Login from './Pages/Login/Login.component';
-import NewPost from './Pages/NewPost/NewPost.component';
-import EditPost from './Pages/EditPost/EditPost.component';
+function App(): JSX.Element {
+    const { user } = useAuth()
+    const { pathname } = useLocation()
+    const history = useHistory()
 
+    useEffect(() => {
+        // Qui non si aggiorna automaticamente ma lo farà quando ci sarà Redux
+        // In breve, se sei loggato e sei su /login redirect a / altrimenti redirect a login se non sei loggato e sei su una pagina diversa da /login
+        if(!!user && pathname === '/login') {
+            history.push('/')
+        }
+        else if(!user && pathname !== '/login') {
+            history.push('/login')
+        }
+    }, [history, user, pathname])
 
-function App() {
-
-  const [ currentUser, setCurrentUser ] = useState<number>();
-
-  function getArticles() {
-    var arr:Array<any> = [];
-    data.articles.map(article => arr.push(article));
-    return(arr);
-  }
-
-  function getUsers() {
-    var arr:Array<any> = [];
-    data.users.map(user => arr.push(user));
-    return(arr);
-  }
-
-  return (
-    <BrowserRouter>
+    return (
       <Switch>
-        <Route exact path="/"> <Home user={currentUser} getArticles={getArticles} /> </Route>
-        <Route exact path="/login"> <Login user={currentUser} getUsers={getUsers} setUser={setCurrentUser} /> </Route>
-        <Route exact path="/new"> <NewPost /> </Route>
-        <Route exact path="/edit/:number"> <EditPost /></Route>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/post/:post" component={NewPost} />
+          <Route exact path="/view/:id" component={ViewPost}/>
+          <Route exact path="/edit/:number" component={EditPost}/>
+          <Route exact path="/login" component={Login} />
       </Switch>
-    </BrowserRouter>
   )
 }
 

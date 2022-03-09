@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-export const StyledArticle = styled.div`
+export const PostWrapper = styled.div`
+    padding: 1rem 14.5rem;
     span {
         display: flex;
         flex-direction: row;
@@ -25,5 +26,18 @@ export const StyledArticle = styled.div`
         h3{
             color: white;
         }
+    }
+  
+    div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      svg {
+        cursor: pointer;
+        fill: white;
+        width: 1.5rem;
+        height: 1.5rem;
+      }
     }
 `;
