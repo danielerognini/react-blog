@@ -29,7 +29,7 @@ const Home = () => {
                             posts.map(post => <div key={post.id}>
                                 <NavLink to={`/view/${post.id}`}>
                                     <PostWrapper>
-                                        <img style={{borderRadius: "0.5rem"}} src={post.picture} alt={post.title + " picture"}/>
+                                        <img style={{borderRadius: "0.5rem"}} src={post.image} alt={post.title + " picture"}/>
                                         <ContentWrapper>
                                             <h1>
                                                 {post.title}

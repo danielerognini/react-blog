@@ -1,10 +1,36 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react'
+import {NavLink, Redirect} from 'react-router-dom';
 import { HeaderWrapper, Left, Right } from './styled';
 import useAuth from '../hooks/useAuth';
+import {Button} from "../styled/styled";
 
 const Header = () => {
-    const { user } = useAuth()
+    const [state, updateState] = React.useState({});
+    const forceUpdate = React.useCallback(() => updateState({}), []);
+
+    const { user, logout } = useAuth()
+    const [hovered, setHovered] = useState<boolean>(false);
+    const [className, setclassName] = useState<string>('');
+
+    const handleMouseHover = () => {
+        if (user) {
+            setclassName('logout');
+        }
+        else {
+            setclassName('login');
+        }
+        setHovered(true);
+    }
+
+    const handleMouseLeave = () => {
+        if(!user) {
+            setclassName('login');
+        }
+        else {
+            setclassName('logout');
+        }
+        setHovered(false);
+    }
 
     return (
         <div style={{marginBottom: "4rem"}}>
@@ -16,9 +42,20 @@ const Header = () => {
                 </Left>
                 {/* - Separare con CSS - */}
                 <Right>
-                    <NavLink exact to="/login">
-                        <p>{user ? user.name : 'Account'}</p>
-                    </NavLink>
+
+                        <p className={className} onMouseOver={handleMouseHover} onMouseLeave={handleMouseLeave} onClick={() => { if(user){ logout(); forceUpdate() } else { return <Redirect to={"/login"} /> } }}>
+                            {
+                                user
+                                    ?
+                                    hovered
+                                        ?
+                                        'Log out'
+                                        :
+                                        (user.name)
+                                    :
+                                    <NavLink exact to="/login"> Log in </NavLink>
+                            }
+                        </p>
                 </Right>
             </HeaderWrapper>
         </div>

@@ -7,7 +7,7 @@ export interface PostType {
     content: string
     date: string
     author: string
-    picture: string
+    image: string
 }
 
 const hardCodedPosts: PostType[] = [
@@ -17,7 +17,7 @@ const hardCodedPosts: PostType[] = [
             "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, nobis. Quasi modi deleniti voluptatibus impedit expedita cupiditate vel corrupti adipisci error. Sapiente, similique. A placeat quas itaque asperiores laborum fugit!",
             "date": "07/03/2022",
             "author": "John",
-            "picture": 'https://picsum.photos/500/199'
+            "image": 'https://picsum.photos/500/199'
         },
         {
             "id": 1,
@@ -25,7 +25,7 @@ const hardCodedPosts: PostType[] = [
             "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, nobis. Quasi modi deleniti voluptatibus impedit expedita cupiditate vel corrupti adipisci error. Sapiente, similique. A placeat quas itaque asperiores laborum fugit!",
             "date": "07/03/2022",
             "author": "Fred",
-            "picture": 'https://picsum.photos/500/199'
+            "image": 'https://picsum.photos/500/199'
         },
         {
             "id": 2,
@@ -33,7 +33,7 @@ const hardCodedPosts: PostType[] = [
             "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, nobis. Quasi modi deleniti voluptatibus impedit expedita cupiditate vel corrupti adipisci error. Sapiente, similique. A placeat quas itaque asperiores laborum fugit!",
             "date": "07/03/2022",
             "author": "Mark",
-            "picture": 'https://picsum.photos/500/199'
+            "image": 'https://picsum.photos/500/199'
         },
         {
             "id": 3,
@@ -41,7 +41,7 @@ const hardCodedPosts: PostType[] = [
             "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, nobis. Quasi modi deleniti voluptatibus impedit expedita cupiditate vel corrupti adipisci error. Sapiente, similique. A placeat quas itaque asperiores laborum fugit!",
             "date": "07/03/2022",
             "author": "Aline",
-            "picture": 'https://picsum.photos/500/199'
+            "image": 'https://picsum.photos/500/199'
         },
         {
             "id": 4,
@@ -49,7 +49,7 @@ const hardCodedPosts: PostType[] = [
             "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, nobis. Quasi modi deleniti voluptatibus impedit expedita cupiditate vel corrupti adipisci error. Sapiente, similique. A placeat quas itaque asperiores laborum fugit!",
             "date": "07/03/2022",
             "author": "JoJo",
-            "picture": 'https://picsum.photos/500/199'
+            "image": 'https://picsum.photos/500/199'
         },
         {
             "id": 5,
@@ -57,7 +57,7 @@ const hardCodedPosts: PostType[] = [
             "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, nobis. Quasi modi deleniti voluptatibus impedit expedita cupiditate vel corrupti adipisci error. Sapiente, similique. A placeat quas itaque asperiores laborum fugit!",
             "date": "07/03/2022",
             "author": "Alfred",
-            "picture": 'https://picsum.photos/500/199'
+            "image": 'https://picsum.photos/500/199'
         },
         {
             "id": 6,
@@ -65,14 +65,14 @@ const hardCodedPosts: PostType[] = [
             "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, nobis. Quasi modi deleniti voluptatibus impedit expedita cupiditate vel corrupti adipisci error. Sapiente, similique. A placeat quas itaque asperiores laborum fugit!",
             "date": "07/03/2022",
             "author": "Dave",
-            "picture": 'https://picsum.photos/500/201'
+            "image": 'https://picsum.photos/500/201'
         },
         {
             "id": 7,
             "title": "Article 8",
             "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, nobis. Quasi modi deleniti voluptatibus impedit expedita cupiditate vel corrupti adipisci error. Sapiente, similique. A placeat quas itaque asperiores laborum fugit!",
             "date": "07/03/2022",
-            "picture": 'https://picsum.photos/500/199',
+            "image": 'https://picsum.photos/500/199',
             "author": "Steve"
         }
     ]
@@ -82,7 +82,7 @@ interface ResponseType {
     getPosts: () => PostType[];
     deletePost: (postId: number) => void;
     getPost: (postId: number) => PostType;
-    editPost: (postId: number, newContent: string) => void;
+    editPost: (postId: number, editedPost: PostType) => void;
     addPost: (title: string, content: string) => void;
     isMine: (id: number, name: string | undefined) => boolean
 }
@@ -105,10 +105,11 @@ const usePosts = (): ResponseType => {
         setPosts(posts.filter(post => post.id !== postId));
     }, [posts]);
 
-    const editPost = useCallback((postId: number, newContent: string) => {
-        const postToChange = hardCodedPosts.find(post => post.id === postId);
+    const editPost = useCallback((postId: number, editedPost: PostType) => {
+        let postToChange = hardCodedPosts.find(post => post.id === postId);
         if (postToChange) {
-            postToChange.content = newContent;
+            postToChange = editedPost;
+            console.log([...hardCodedPosts])
             setPosts([...hardCodedPosts]);
         }
     }, []);
@@ -118,7 +119,7 @@ const usePosts = (): ResponseType => {
             hardCodedPosts.unshift({
                 id: Math.floor(Math.random() * (10 - 100 + 1)) + 10,
                 author: user?.name,
-                picture: 'https://picsum.photos/500/200',
+                image: 'https://picsum.photos/500/200',
                 date: '09-03-2022',
                 title,
                 content

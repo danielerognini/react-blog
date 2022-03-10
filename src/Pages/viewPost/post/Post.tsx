@@ -13,7 +13,7 @@ const Post = ({ data }: props) => {
     const { isMine } = usePosts();
 
     if(data) {
-        const { id, title, content, date, author, picture } = data;
+        const { id, title, content, date, author, image } = data;
 
         return (
             <PostWrapper key={id}>
@@ -42,7 +42,7 @@ const Post = ({ data }: props) => {
                     <span key={id + 1} className='date'> {date} </span>
                 </div>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <img style={{borderRadius: "0.5rem", width: "1000px", height: "398px", marginTop: "2rem", marginBottom: "2rem"}} src={picture} alt={title + " picture"}/>
+                    <img style={{borderRadius: "0.5rem", width: "1000px", height: "398px", marginTop: "2rem", marginBottom: "2rem"}} src={image} alt={title + " picture"}/>
                 </div>
 
                 <p key={id + 2}> {content} </p>

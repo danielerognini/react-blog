@@ -25,11 +25,24 @@ export const HeaderWrapper = styled.div`
         /*padding: 0.35rem 1.5rem;*/
         padding: 0.75rem 1rem;
         margin: 0.8rem 0rem;
+        cursor: pointer;
     }
 
     p:hover {
         background-color: #8D4AE3;
         border-radius: 1rem;
+    }
+  
+    .login:hover {
+        background-color: #8D4AE3;
+        border-radius: 1rem;
+        cursor: pointer;
+    }
+
+    .logout:hover {
+        background-color: red;
+        font-weight: bold;
+        cursor: pointer;
     }
 `;
 
@@ -45,4 +58,10 @@ export const Right = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    
+    .logout {
+      background-color: transparent;
+      color: white;
+      border: none;
+    }
 `;

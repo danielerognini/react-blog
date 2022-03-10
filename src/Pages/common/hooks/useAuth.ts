@@ -29,6 +29,7 @@ const users: UserType[] = [
 interface ReturnType {
     user: UserType | undefined
     login: (email: UserType['email'], password: UserType['password']) => boolean
+    logout: () => void
 }
 
 const useAuth = (): ReturnType => {
@@ -62,11 +63,14 @@ const useAuth = (): ReturnType => {
         }
     }, [setCurrentUser])
 
+    const logout = useCallback(() => {setCurrentUser(undefined)}, [setCurrentUser])
+
     const getCurrentUser = useCallback(() => { return currentUser }, []);
 
     return {
         user: currentUser,
         login,
+        logout,
     }
 }
 
