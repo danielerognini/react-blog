@@ -1,6 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import Header from '../common/header/Header';
-import { StyledLogin, Form, Error, Input, Button } from './styled';
+import { StyledLogin, Form, Error, Input } from './styled';
+import {Button} from "../common/styled/styled";
 import useAuth from "../common/hooks/useAuth";
 
 const Login = () => {
@@ -21,9 +22,9 @@ const Login = () => {
     }, [setEmail, setPassword])
 
     const handleSubmit = useCallback((e: any) => {
-        e.preventDefault()
-        const isLoginSucceded = login(email, password)
-        setIsError(!isLoginSucceded)
+        e.preventDefault();
+        const isLoginSucceded = login(email, password);
+        setIsError(!isLoginSucceded);
     }, [login, email, password])
 
     return(

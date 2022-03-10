@@ -33,6 +33,7 @@ export const PostWrapper = styled.div`
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+      
       svg {
         cursor: pointer;
         fill: white;

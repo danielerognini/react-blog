@@ -29,7 +29,7 @@ function App(): JSX.Element {
           <Route exact path="/" component={Home} />
           <Route exact path="/post/:post" component={NewPost} />
           <Route exact path="/view/:id" component={ViewPost}/>
-          <Route exact path="/edit/:number" component={EditPost}/>
+          <Route exact path="/edit/:id" component={EditPost}/>
           <Route exact path="/login" component={Login} />
       </Switch>
   )
