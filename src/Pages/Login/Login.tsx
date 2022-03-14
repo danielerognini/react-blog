@@ -3,6 +3,7 @@ import Header from '../common/header/Header';
 import { StyledLogin, Form, Error, Input } from './styled';
 import {Button} from "../common/styled/styled";
 import useAuth from "../common/hooks/useAuth";
+import {useHistory} from "react-router-dom";
 
 const Login = () => {
     const [ email, setEmail ] = useState<string>("");
@@ -10,7 +11,8 @@ const Login = () => {
 
     const [ isError, setIsError ] = useState(false);
 
-    const { login } = useAuth()
+    const { login } = useAuth();
+    const history = useHistory();
 
     const handleChange = useCallback((event: any) => {
         if(event.target.type === 'text') {
@@ -23,8 +25,9 @@ const Login = () => {
 
     const handleSubmit = useCallback((e: any) => {
         e.preventDefault();
-        const isLoginSucceded = login(email, password);
-        setIsError(!isLoginSucceded);
+        login({email, password});
+        //setIsError(!isLoginSucceded);
+        history.push('/');
     }, [login, email, password])
 
     return(
