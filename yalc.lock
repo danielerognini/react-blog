@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "@fattureincloud/fic-design-system": {
+      "signature": "c7a9b9f4f5821162e3bac3ed934cee8b",
+      "file": true,
+      "replaced": "^0.4.9"
+    }
+  }
+}

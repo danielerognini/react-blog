@@ -1,26 +1,32 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {useParams, useRouteMatch} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 
-import usePosts, {PostType} from "../common/hooks/usePosts";
-import Post from "./post/Post";
+import usePosts from "../common/hooks/usePosts";
+import Post from "./components/post/Post";
 import Header from "../common/header/Header";
+import AddComment from "./components/addComment/AddComment";
+import CommentsList from "./components/commentsList/CommentsList";
+import {CommentsWrapper, PageContentWrapper} from "./styled";
+import {PostType} from "../../redux/posts/types";
+import {Separator} from "../editPost/styled";
 
 const ViewPost = () => {
-    const [currentPost, setCurrentPost] = useState<PostType>();
-    let { id } = useParams<{id:string}>()
+    const { getPost } = usePosts();
+    let { id } = useParams<{id:string}>();
 
-    const { getPost } = usePosts()
-
-    useEffect(() => {
-        setCurrentPost(getPost(parseInt(id)));
-    }, [/*getPosts*/])
+    const [currentPost] = useState<PostType>(getPost(parseInt(id)));
 
     return(
         <>
             <Header />
-            <div style={{margin: "2rem", marginTop: "6rem"}}>
-                <Post data={currentPost} />
-            </div>
+            <PageContentWrapper>
+                <Post post={currentPost} />
+                <Separator />
+                <CommentsWrapper>
+                    <AddComment postId={id} />
+                    <CommentsList postId={id} />
+                </CommentsWrapper>
+            </PageContentWrapper>
         </>
     );
 }

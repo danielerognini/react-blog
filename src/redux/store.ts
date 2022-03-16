@@ -1,8 +1,16 @@
-import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./authReducer";
+import {combineReducers, configureStore} from "@reduxjs/toolkit";
+import authReducer, { initialState as authState} from "./auth/authReducer";
+import postsReducer, {initialState as postState} from "./posts/reducer";
+import {AuthStorageType} from "./auth/types";
+import { PostType} from "./posts/types";
+
+export interface GlobalStore {
+    auth: AuthStorageType,
+    posts: PostType[]
+}
 
 const store = configureStore({
-    reducer: { auth: authReducer },
+    reducer: combineReducers<GlobalStore>({ auth: authReducer, posts: postsReducer }),
     devTools: true
 });
 

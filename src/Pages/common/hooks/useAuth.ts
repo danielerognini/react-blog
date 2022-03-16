@@ -1,12 +1,12 @@
 import {useCallback} from 'react'
 import {useHistory} from "react-router-dom";
-import {AuthType, LoginPropsType, UserType} from "../../../redux/types";
+import {AuthStorageType, LoginPropsType, UserType} from "../../../redux/auth/types";
 import {useDispatch, useSelector} from "react-redux";
-import {login as reduxLogin, logout as reduxLogout} from '../../../redux/authReducer';
-import {getUser} from "../../../redux/selector";
+import {login as reduxLogin, logout as reduxLogout} from '../../../redux/auth/authReducer';
+import {getUser} from "../../../redux/auth/selector";
 
 interface ReturnType {
-    user: AuthType['user']
+    user: AuthStorageType['user']
     login: (props: LoginPropsType) => void
     logout: () => void
 }

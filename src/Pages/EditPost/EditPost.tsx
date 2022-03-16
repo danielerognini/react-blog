@@ -1,86 +1,85 @@
-import React, {useEffect, useState} from 'react';
-import usePosts, {PostType} from "../common/hooks/usePosts";
-import { NavLink, Redirect } from "react-router-dom";
+import React, {useCallback, useEffect, useState} from 'react';
+import usePosts from "../common/hooks/usePosts";
+import {useHistory} from "react-router-dom";
 
 import Header from "../common/header/Header";
 import {useParams} from "react-router-dom";
-import {FormWrapper} from "./styled";
+import {Wrapper} from "./styled";
 import {Button} from "../common/styled/styled";
+import {PostType} from "../../redux/posts/types";
+import {InputText} from "@fattureincloud/fic-design-system";
 
 const EditPost = () => {
-    const [state, updateState] = React.useState({});
-    const forceUpdate = React.useCallback(() => updateState({}), []);
-
-    let { id } = useParams<{id:string}>()
-    const [currentPost, setCurrentPost] = useState<PostType>();
-
     const { getPost, editPost } = usePosts();
 
+    const { id } = useParams<{id:string}>() //post id from the url
+    const [currentPost, setCurrentPost] = useState<PostType>(getPost(parseInt(id)));
+
+    const history = useHistory();
+
     useEffect(() => {
-        if(!currentPost){
-            setCurrentPost(getPost(parseInt(id)));
-        }
-    }, [getPost]);
+        (!currentPost || !currentPost.isMine) && history.push(`/view/${id}`)
+    }, [history, currentPost]);
 
-    const handleChange = (e:any) => {
+    const handleChange = useCallback((e:any) => {
         e.preventDefault();
-        let editedPost = currentPost;
-        if(editedPost) {
-            switch (e.target.name) {
-                case 'title':
-                    editedPost.title = e.target.value;
-                    break;
-                case 'image-path':
-                    editedPost.image = e.target.value;
-                    break;
-                case 'content':
-                    editedPost.content = e.target.value;
-                    break;
-                default:
-                    return
-                    break;
-            }
-        }
-        setCurrentPost(editedPost);
-        forceUpdate();
-    }
+        setCurrentPost({ ...currentPost, [e.target.name]: e.target.value });
+    }, [currentPost]);
 
-    const handleSubmit = () => {
-        if(currentPost) {
-            editPost(parseInt(id), currentPost);
-            return <Redirect to={`/view/${id}`} />
-        }
-    }
+    const handleSubmit = useCallback(() => {
+        editPost(currentPost);
+        history.push(`/view/${id}`);
+    }, [currentPost, history, id]);
 
     return(
         <div>
             <Header />
             <div style={{margin: "2rem", marginTop: "6rem"}}>
-                <FormWrapper>
+                <Wrapper>
+                    <InputText required label={'Title'} value={currentPost?.title} onChange={handleChange} placeholder={'Title'} name={'title'} inputType={'text'}/>
                     <div>
-                        <form id='edit-post-form' onSubmit={handleSubmit}>
-                            <div>
-                                <span className='title'>Title: </span>
-                                <input className='title' type="text" id="title" name="title" placeholder='Title' onChange={handleChange} value={currentPost?.title} ></input>
-                            </div>
-                            <div>
-                                <h3>Image URL:</h3>
-                                <input type="text" id="image-path" name="image-path" placeholder='Image path' onChange={handleChange} value={currentPost?.image} />
-                            </div>
-                            <img src={currentPost?.image} alt=""/>
-                            <div className='content-wrapper'>
-                                <h3 className='content'>Article content:</h3>
-                                <textarea className='content' form='edit-post-form' id="content" name="content" placeholder='Content' onChange={handleChange} value={currentPost?.content} />
-                            </div>
-                            <div className='button-wrapper'>
-                                <Button type='submit'><NavLink to={`/view/${id}`}>Save</NavLink></Button>
-                            </div>
-                        </form>
+                        <InputText required label={'Image path'} value={currentPost?.image} onChange={handleChange} placeholder={'Image path'} name={'path'} inputType={'text'}/>
+                        <img src={currentPost?.image} alt=""/>
                     </div>
-                </FormWrapper>
+                    <InputText required label={'Post content'} value={currentPost?.content} onChange={handleChange} placeholder={'Post content'} name={'content'} inputType={'text'}/>
+                    <textarea className='content' form='edit-post-form' id="content" name="content" placeholder='Content' onChange={handleChange} value={currentPost?.content} />
+                    <div>
+                        <Button type='submit' onClick={handleSubmit}> Save </Button>
+                    </div>
+                </Wrapper>
             </div>
         </div>
     );
 }
+
+/*
+<FormWrapper>
+                            <div>
+                                <form id='edit-post-form' onSubmit={handleSubmit}>
+                                    <div>
+                                        <InputText required label={'Title'} value={currentPost?.title} onChange={handleChange} placeholder={'Title'} name={'title'} inputType={'text'}/>
+                                        <span className='title'>Title: </span>
+                                        <input className='title' type="text" id="title" name="title" placeholder='Title' onChange={handleChange} value={currentPost?.title} ></input>
+                                    </div>
+                                    <div>
+                                        <h3>Image URL:</h3>
+                                        <input type="text" id="image-path" name="image-path" placeholder='Image path' onChange={handleChange} value={currentPost?.image} />
+                                    </div>
+                                    <img src={currentPost?.image} alt=""/>
+                                    <div className='content-wrapper'>
+                                        <h3 className='content'>Article content:</h3>
+                                        <textarea className='content' form='edit-post-form' id="content" name="content" placeholder='Content' onChange={handleChange} value={currentPost?.content} />
+                                    </div>
+                                    <div className='button-wrapper'>
+                                        <NavLink to={`/view/${id}`}>
+                                            <Button type='submit' onClick={handleSubmit}>
+                                                Save
+                                            </Button>
+                                        </NavLink>
+                                    </div>
+                                </form>
+                            </div>
+                        </FormWrapper>
+ */
 
 export default EditPost;

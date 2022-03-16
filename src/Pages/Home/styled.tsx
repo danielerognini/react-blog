@@ -11,7 +11,7 @@ export const HomeBody = styled.div`
 export const StyledList = styled.div`
     margin: 1rem 0;
     a{
-      color: white;
+      color: black;
       text-decoration: none;
     }
 `;
@@ -24,7 +24,7 @@ export const PostWrapper = styled.div`
 
     padding: 0.75rem 0.5rem;
     margin: 2rem 2rem;
-    border: solid white 0.15rem;
+    border: solid black 0.15rem;
     border-radius: 1rem;
 
     img {
@@ -51,11 +51,5 @@ export const ContentWrapper = styled.div`
     h1, h3, p{
         margin: 0 1rem 0 0;
         padding: 0;
-    }
-  
-    svg {
-        fill: white;
-        width: 1.5rem;
-        height: 1.5rem;
     }
 `;

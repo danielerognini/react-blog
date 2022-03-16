@@ -7,11 +7,16 @@ import { BrowserRouter } from "react-router-dom";
 import {Provider} from "react-redux";
 import store from "./redux/store";
 
+import { ThemeProvider } from '@fattureincloud/fic-design-system';
+import { theme } from './theme/index';
+
 ReactDOM.render(
     <Provider store={store}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
+        <ThemeProvider theme={theme}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </ThemeProvider>
     </Provider>,
   document.getElementById('root')
 );

@@ -1,0 +1,62 @@
+{
+  "name": "@fattureincloud/fic-design-system",
+  "version": "0.4.9",
+  "description": "Fatture in Cloud and Danea design system",
+  "repository": "git@bitbucket.org:fattureincloud/design-system.git",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "1.2.36",
+    "@fortawesome/free-brands-svg-icons": "~5.15.4",
+    "@fortawesome/free-regular-svg-icons": "~5.15.4",
+    "@fortawesome/free-solid-svg-icons": "~5.15.4",
+    "@fortawesome/pro-duotone-svg-icons": "~5.15.4",
+    "@fortawesome/pro-light-svg-icons": "~5.15.4",
+    "@fortawesome/pro-regular-svg-icons": "~5.15.4",
+    "@fortawesome/pro-solid-svg-icons": "~5.15.4",
+    "@fortawesome/react-fontawesome": "0.1.14",
+    "@popperjs/core": "^2.6.0",
+    "@types/react": "^17.0.37",
+    "@types/react-select": "^4.0.18",
+    "lodash": "^4.17.21",
+    "react-device-detect": "^2.1.2",
+    "react-dropzone": "^12.0.2",
+    "react-is": "^17.0.2",
+    "react-modal": "^3.11.1",
+    "react-popper": "^2.2.4",
+    "react-select": "^4.3.1",
+    "react-table": "^7.7.0",
+    "react-toastify": "^6.0.8",
+    "react-transition-group": "^4.4.2",
+    "react-use": "^17.3.1",
+    "styled-components": "5.3.1"
+  },
+  "peerDependencies": {
+    "@types/react-table": "^7.7.9",
+    "@types/styled-components": "~5.1.15",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-table": "^7.7.0",
+    "styled-components": "5.3.1"
+  },
+  "scripts": {
+    "storybook": "start-storybook -s ./static -p 9001",
+    "build": "rollup -c",
+    "build-storybook": "build-storybook -c .storybook",
+    "precommit": "pretty-quick --staged",
+    "fix": "eslint --fix src/**/*.{ts,tsx}"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "yarn run prettier --write",
+      "yarn run eslint --fix"
+    ]
+  },
+  "packageManager": "yarn@3.1.1",
+  "yalcSig": "c7a9b9f4f5821162e3bac3ed934cee8b"
+}
